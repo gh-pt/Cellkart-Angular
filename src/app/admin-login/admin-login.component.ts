@@ -11,7 +11,6 @@ export class AdminLoginComponent {
     password: 'admin123'
   }
   collectData(loginForm: any) {
-    // console.log(loginForm);
     this.admin = loginForm.value;
     console.log(this.admin);
   }
