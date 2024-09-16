@@ -1,0 +1,10 @@
+<div class="container mx-auto mt-8">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+        <div *ngFor="let product of products">
+            <!-- Pass product data to the ProductCard component -->
+            <app-product-card [product]="product" (editProduct)="onEditProduct($event)"></app-product-card>
+        </div>
+    </div>
+    <!-- Product Input Form -->
+    <app-product-input [product]="selectedProduct"></app-product-input>
+</div>

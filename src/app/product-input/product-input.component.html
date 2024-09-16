@@ -1,0 +1,93 @@
+<div class="product-input-container max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-lg">
+    <form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="space-y-6">
+        <div class="form-group">
+            <label for="name" class="block text-sm font-medium text-gray-700">Name:</label>
+            <input id="name" formControlName="Name" type="text"
+                class="mt-1 block w-full border text-black px-3 py-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
+            <div *ngIf="f['Name'].invalid && f['Name'].touched" class="text-red-500">
+                Name is required.
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="description" class="block text-sm font-medium text-gray-700">Description:</label>
+            <textarea id="description" formControlName="Description"
+                class="mt-1 block w-full border text-black px-3 py-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"></textarea>
+            <div *ngIf="f['Description'].invalid && f['Description'].touched" class="text-red-500">
+                Description is required.
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="brand" class="block text-sm font-medium text-gray-700">Brand:</label>
+            <input id="brand" formControlName="Brand" type="text"
+                class="mt-1 block w-full border text-black px-3 py-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
+            <div *ngIf="f['Brand'].invalid && f['Brand'].touched" class="text-red-500">
+                Brand is required.
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="rating" class="block text-sm font-medium text-gray-700">Rating:</label>
+            <input id="rating" formControlName="Rating" type="number"
+                class="mt-1 block w-full border text-black px-3 py-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
+            <div *ngIf="f['Rating'].invalid && f['Rating'].touched" class="text-red-500">
+                Rating must be between 0 and 5.
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="price" class="block text-sm font-medium text-gray-700">Price:</label>
+            <input id="price" formControlName="Price" type="number"
+                class="mt-1 block w-full border text-black px-3 py-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
+            <div *ngIf="f['Price'].invalid && f['Price'].touched" class="text-red-500">
+                Price is required.
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <label for="stock" class="block text-sm font-medium text-gray-700">Stock:</label>
+            <input id="stock" formControlName="Stock" type="number"
+                class="mt-1 block w-full border text-black px-3 py-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
+            <div *ngIf="f['Stock'].invalid && f['Stock'].touched" class="text-red-500">
+                Stock is required.
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="discount" class="block text-sm font-medium text-gray-700">Discount:</label>
+            <input id="discount" formControlName="Discount" type="number"
+                class="mt-1 block w-full border text-black px-3 py-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
+            <div *ngIf="f['Discount'].invalid && f['Discount'].touched" class="text-red-500">
+                Discount is required.
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="image" class="block text-sm font-medium text-gray-700">Image:</label>
+            <input id="image" formControlName="Image" type="text"
+                class="mt-1 block w-full border text-black px-3 py-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
+            <div *ngIf="f['Image'].invalid && f['Image'].touched" class="text-red-500">
+                Image URL is required.
+            </div>
+        </div>
+
+        <button type="submit"
+            class="w-full py-2 px-4 bg-indigo-600 text-white rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            Submit
+        </button>
+    </form>
+
+    <div *ngIf="product" class="mt-8 p-4 bg-gray-100 rounded-lg text-black">
+        <h3 class="text-xl font-semibold">Product Preview</h3>
+        <p><strong>Name:</strong> {{ product.Name }}</p>
+        <p><strong>Description:</strong> {{ product.Description }}</p>
+        <p><strong>Brand:</strong> {{ product.Brand }}</p>
+        <p><strong>Rating:</strong> {{ product.Rating }}</p>
+        <p><strong>Price:</strong> {{ product.Price }}</p>
+        <p><strong>Stock:</strong> {{ product.Stock }}</p>
+        <p><strong>Discount:</strong> {{ product.Discount }}</p>
+        <p class="overflow-hidden"><strong>Image:</strong> {{ product.Image }}</p>
+    </div>
+</div>
