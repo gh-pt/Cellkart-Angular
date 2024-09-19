@@ -19,6 +19,7 @@ export class ProductsComponent {
   products: Product[] = [];
 
   selectedProduct: Product | undefined;
+  
   // Handle the emitted product from the ProductCardComponent
   onEditProduct(product: Product) {
     this.selectedProduct = product; // Set the selected product
@@ -40,10 +41,10 @@ export class ProductsComponent {
     });
   }
 
-  // deleteProduct(id: number): void {
-  //   this.productService.deleteProduct(id).subscribe(() => {
-  //     this.products = this.products.filter(p => p.id !== id);
-  //   });
+  deleteProduct(id: number): void {
+    this.productService.deleteProduct(id).subscribe(() => {
+      this.products = this.products.filter(p => p.prodId !== id);
+    });
   }
 
-
+}

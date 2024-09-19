@@ -24,13 +24,18 @@ export class ProductService {
   }
 
   // Create a new product
-  createProduct(product: Product): Observable<Product> {
-    return this.http.post<Product>(this.apiUrl, product, {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
-    });
+  // createProduct(product: Product): Observable<Product> {
+  //   return this.http.post<Product>(this.apiUrl+'/addProd', product, {
+  //     headers: new HttpHeaders({
+  //       'Content-Type': 'application/json'
+  //     })
+  //   });
+  // }
+
+  createProduct(productFormData: FormData): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/addProd`, productFormData);
   }
+
 
   // Update an existing product by ID
   updateProduct(id: number, product: Product): Observable<Product> {
@@ -44,7 +49,7 @@ export class ProductService {
 
   // Delete a product by ID
   deleteProduct(id: number): Observable<void> {
-    const url = `${this.apiUrl}/${id}`;
+    const url = `${this.apiUrl+'/deleteProd'}/${id}`;
     return this.http.delete<void>(url);
   }
 }

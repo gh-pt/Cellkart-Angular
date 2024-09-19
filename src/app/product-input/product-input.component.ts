@@ -1,18 +1,21 @@
 import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Product } from '../ProductClass/ProductClass';
+import { ProductService } from '../services/product.service'; // Import the service
 
 @Component({
   selector: 'app-product-input',
   templateUrl: './product-input.component.html',
   styleUrls: ['./product-input.component.css']
 })
+
 export class ProductInputComponent implements OnInit {
   @Input() product: Product | undefined;
 
   productForm: FormGroup;
+  selectedFile: File | null = null; // For holding the selected file
 
-  constructor() {
+  constructor(private productService: ProductService) { // Inject your service
     // Initialize form controls with validation
     this.productForm = new FormGroup({
       Name: new FormControl('', Validators.required),
@@ -22,24 +25,47 @@ export class ProductInputComponent implements OnInit {
       Price: new FormControl(0, Validators.required),
       Stock: new FormControl(0, Validators.required),
       Discount: new FormControl(0, Validators.required),
-      Image: new FormControl('', Validators.required)
+      Image: new FormControl('', Validators.required) // No longer directly required for FormControl
     });
+  }
+
+  // Handle file selection
+  onFileChange(event: any): void {
+    const file = event.target.files[0];
+    if (file) {
+      this.selectedFile = file;
+      this.productForm.get('Image')?.setValue(file.name); // Set file name just for form validation
+    }
   }
 
   // Function to submit form data
   onSubmit() {
-    if (this.productForm.valid) {
-      this.product = new Product(
-        this.productForm.get('Name')?.value,
-        this.productForm.get('Description')?.value,
-        this.productForm.get('Brand')?.value,
-        this.productForm.get('Rating')?.value,
-        this.productForm.get('Price')?.value,
-        this.productForm.get('Stock')?.value,
-        this.productForm.get('Discount')?.value,
-        this.productForm.get('Image')?.value
+    if (this.productForm.valid && this.selectedFile) {
+      const formData = new FormData();
+
+      // Append form fields to FormData
+      formData.append('Name', this.productForm.get('Name')?.value);
+      formData.append('Description', this.productForm.get('Description')?.value);
+      formData.append('Brand', this.productForm.get('Brand')?.value);
+      formData.append('Rating', this.productForm.get('Rating')?.value);
+      formData.append('Price', this.productForm.get('Price')?.value);
+      formData.append('Stock', this.productForm.get('Stock')?.value);
+      formData.append('Discount', this.productForm.get('Discount')?.value);
+
+      // Append the file to FormData as 'Image'
+      formData.append('Image', this.selectedFile);
+
+      // Send the form data using the service
+      const obs = this.productService.createProduct(formData);
+      obs.subscribe({
+        next:(product)=>{
+          console.log(`Product addedd successfully,${product}`)
+        },
+        error:(err)=>{
+          console.log(err)
+        }
+      }
       );
-      console.log('Product submitted:', this.product);
     } else {
       this.productForm.markAllAsTouched();  // Ensure all fields are marked as touched to show validation errors
     }

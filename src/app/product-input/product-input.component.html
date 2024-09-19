@@ -59,7 +59,7 @@
 
             <div class="form-group">
                 <label for="discount" class="block text-sm font-medium text-gray-700">Discount:</label>
-                <input id="discount" formControlName="Discount" type="number"
+                <input id="discount" formControlName="Discount" type="text"
                     class="mt-1 block w-full border text-black px-3 py-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
                 <div *ngIf="f['Discount'].invalid && f['Discount'].touched" class="text-red-500">
                     Discount is required.
@@ -68,15 +68,16 @@
 
             <div class="form-group">
                 <label for="image" class="block text-sm font-medium text-gray-700">Image:</label>
-                <input id="image" formControlName="Image" type="text"
+                <input id="image" (change)="onFileChange($event)" type="file"
                     class="mt-1 block w-full border text-black px-3 py-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
-                <div *ngIf="f['Image'].invalid && f['Image'].touched" class="text-red-500">
-                    Image URL is required.
+                <div *ngIf="f['Image'].invalid && f['Image'].touched"  class="text-red-500">
+                    Image file is required.
                 </div>
             </div>
+            
 
             <button type="submit"
-                class="w-full py-2 px-4 bg-indigo-600 text-white rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                class="w-full py-2 px-4 bg-indigo-600 text-white rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" [disabled]="productForm.invalid">
                 Submit
             </button>
             <button type="reset"
