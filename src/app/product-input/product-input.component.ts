@@ -2,6 +2,7 @@ import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Product } from '../ProductClass/ProductClass';
 import { ProductService } from '../services/product.service'; // Import the service
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-input',
@@ -15,7 +16,7 @@ export class ProductInputComponent implements OnInit {
   productForm: FormGroup;
   selectedFile: File | null = null; // For holding the selected file
 
-  constructor(private productService: ProductService) { // Inject your service
+  constructor(private productService: ProductService, private router:Router) { // Inject your service
     // Initialize form controls with validation
     this.productForm = new FormGroup({
       Name: new FormControl('', Validators.required),
@@ -55,14 +56,18 @@ export class ProductInputComponent implements OnInit {
       // Append the file to FormData as 'Image'
       formData.append('Image', this.selectedFile);
 
+      console.log(formData)
       // Send the form data using the service
       const obs = this.productService.createProduct(formData);
       obs.subscribe({
         next:(product)=>{
           console.log(`Product addedd successfully,${product}`)
+          window.alert(`Product added Successfully`)
+          this.router.navigate(['/home']);
         },
         error:(err)=>{
           console.log(err)
+          window.alert("something went wrong while adding...")
         }
       }
       );

@@ -19,7 +19,7 @@ export class ProductsComponent {
   products: Product[] = [];
 
   selectedProduct: Product | undefined;
-  
+
   // Handle the emitted product from the ProductCardComponent
   onEditProduct(product: Product) {
     this.selectedProduct = product; // Set the selected product
@@ -41,10 +41,28 @@ export class ProductsComponent {
     });
   }
 
-  deleteProduct(id: number): void {
-    this.productService.deleteProduct(id).subscribe(() => {
-      this.products = this.products.filter(p => p.prodId !== id);
-    });
+  // deleteProduct(id: number): void {
+  //   this.productService.deleteProduct(id).subscribe(() => {
+  //     this.products = this.products.filter(p => p.prodId !== id);
+  //   });
+  // }
+
+  deleteProduct(id:number): void{
+    const ans=confirm("Do you really want to delete?")
+    if(ans){
+      const obs=this.productService.deleteProduct(id)
+      obs.subscribe({
+        next:(obj)=>{
+          console.log(obj);
+          window.alert("Employe deleted successfully....");
+          this.products = this.products.filter(p => p.prodId !== id);
+        },
+        error: (err)=>{
+          console.log(err); 
+          window.alert("something went wrong deleting employee...")
+        }
+      });
+    }
   }
 
 }
