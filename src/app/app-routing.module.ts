@@ -19,7 +19,7 @@ const routes: Routes = [
     component : AdminLoginComponent
   },
   {
-    path : 'products',
+    path : 'addProduct',
     component : ProductInputComponent
   }
 

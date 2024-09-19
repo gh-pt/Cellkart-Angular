@@ -10,6 +10,8 @@ import { ProductCardComponent } from './product-card/product-card.component';
 import { ProductsComponent } from './products/products.component';
 import { ProductInputComponent } from './product-input/product-input.component';
 import { AdminLoginComponent } from './admin-login/admin-login.component';
+import { HttpClientModule, provideHttpClient } from '@angular/common/http';
+
 
 @NgModule({
   declarations: [
@@ -27,7 +29,7 @@ import { AdminLoginComponent } from './admin-login/admin-login.component';
     FormsModule,
     ReactiveFormsModule,
   ],
-  providers: [],
+  providers: [provideHttpClient()],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
