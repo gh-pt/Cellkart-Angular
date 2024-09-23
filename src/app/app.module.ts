@@ -37,8 +37,8 @@ import { MyCounterComponent } from './my-counter/my-counter.component';
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    BrowserAnimationsModule, // Required for Angular Material animations
-    MatCardModule, // Import MatCardModule
+    BrowserAnimationsModule, 
+    MatCardModule,
     MatButtonModule, 
     StoreModule.forRoot({ count: counterReducer })
   ],
