@@ -18,14 +18,6 @@ export class ProductsComponent {
 
   products: Product[] = [];
 
-  selectedProduct: Product | undefined;
-
-  // Handle the emitted product from the ProductCardComponent
-  onEditProduct(product: Product) {
-    this.selectedProduct = product; // Set the selected product
-    console.log(this.selectedProduct)
-  }
-
   constructor(private productService:ProductService){
 
   }
@@ -40,12 +32,6 @@ export class ProductsComponent {
       this.products = data;
     });
   }
-
-  // deleteProduct(id: number): void {
-  //   this.productService.deleteProduct(id).subscribe(() => {
-  //     this.products = this.products.filter(p => p.prodId !== id);
-  //   });
-  // }
 
   deleteProduct(id:number): void{
     const ans=confirm("Do you really want to delete?")

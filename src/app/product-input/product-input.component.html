@@ -65,19 +65,24 @@
                     Discount is required.
                 </div>
             </div>
+            <!-- Image preview -->
+            <div *ngIf="imagePreview" class="h-[150px] w-[200px] rounded">
+                <img [src]="imagePreview" alt="Product Image" class="w-full h-full object-contain" />
+            </div>
 
             <div class="form-group">
                 <label for="image" class="block text-sm font-medium text-gray-700">Image:</label>
-                <input id="image" (change)="onFileChange($event)" type="file"
+                <input id="image" (change)="onFileChange($event)" type="file" formControlName="Image"
                     class="mt-1 block w-full border text-black px-3 py-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
-                <div *ngIf="f['Image'].invalid && f['Image'].touched"  class="text-red-500">
+                <div *ngIf="(f['Image'].invalid && f['Image'].touched) && (route?.includes('addProduct'))"
+                    class="text-red-500">
                     Image file is required.
                 </div>
             </div>
-            
+
 
             <button type="submit"
-                class="w-full py-2 px-4 bg-indigo-600 text-white rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" [disabled]="productForm.invalid">
+                class="w-full py-2 px-4 bg-indigo-600 text-white rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                 Submit
             </button>
             <button type="reset"
@@ -85,17 +90,5 @@
                 Reset
             </button>
         </form>
-
-        <div *ngIf="product" class="mt-8 p-4 bg-gray-100 rounded-lg text-black">
-            <h3 class="text-xl font-semibold">Product Preview</h3>
-            <p><strong>Name:</strong> {{ product.Name }}</p>
-            <p><strong>Description:</strong> {{ product.Description }}</p>
-            <p><strong>Brand:</strong> {{ product.Brand }}</p>
-            <p><strong>Rating:</strong> {{ product.Rating }}</p>
-            <p><strong>Price:</strong> {{ product.Price }}</p>
-            <p><strong>Stock:</strong> {{ product.Stock }}</p>
-            <p><strong>Discount:</strong> {{ product.Discount }}</p>
-            <p class="overflow-hidden"><strong>Image:</strong> {{ product.Image }}</p>
-        </div>
     </div>
 </section>

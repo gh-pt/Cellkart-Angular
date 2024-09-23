@@ -13,7 +13,7 @@
     </div>
     <div class="w-full flex items-center gap-4">
         <!-- Trigger the onEdit method to emit the selected product -->
-        <button class="border border-black bg-green-500 text-black rounded-md px-3 py-1" (click)="onEdit()">Edit</button>
+        <button class="border border-black bg-green-500 text-black rounded-md px-3 py-1" [routerLink]="['/editProduct',product.prodId]">Edit</button>
         <button class="border border-black bg-red-500 text-black rounded-md px-3 py-1 " (click)="emitter.emit(product.prodId)">Delete</button>
     </div>
 </div>

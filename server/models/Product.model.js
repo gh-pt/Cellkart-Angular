@@ -17,11 +17,24 @@ export const getProductById = async (db, id) => {
     return results[0];
 };
 
+// export const updateProduct = async (db, id, product) => {
+//     const query = 'UPDATE Products SET Name = ?, Description = ?, Brand = ?, Rating = ?, Price = ?, Stock = ?, Discount = ?, Image = ? WHERE prodId = ?';
+//     const [results] = await db.execute(query, [product.Name, product.Description, product.Brand, product.Rating, product.Price, product.Stock, product.Discount, product.Image, id]);
+//     return results.affectedRows;
+// };
+
 export const updateProduct = async (db, id, product) => {
-    const query = 'UPDATE Products SET Name = ?, Description = ?, Brand = ?, Rating = ?, Price = ?, Stock = ?, Discount = ?, Image = ? WHERE prodId = ?';
-    const [results] = await db.execute(query, [product.Name, product.Description, product.Brand, product.Rating, product.Price, product.Stock, product.Discount, product.Image, id]);
+    // Build the query dynamically based on which fields are present in product
+    const fields = Object.keys(product);
+    const placeholders = fields.map(field => `${field} = ?`).join(', ');
+    const query = `UPDATE Products SET ${placeholders} WHERE prodId = ?`;
+
+    // Prepare values to be passed to the query
+    const values = [...Object.values(product), id];
+    const [results] = await db.execute(query, values);
     return results.affectedRows;
 };
+
 
 export const deleteProduct = async (db, id) => {
     const query = 'DELETE FROM Products WHERE prodId = ?';

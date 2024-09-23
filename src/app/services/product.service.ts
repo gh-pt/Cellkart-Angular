@@ -19,34 +19,20 @@ export class ProductService {
 
   // Get a single product by ID
   getProductById(id: number): Observable<Product> {
-    const url = `${this.apiUrl}/${id}`;
+    const url = `${this.apiUrl+'/getProdById'}/${id}`;
     return this.http.get<Product>(url);
   }
 
   // Create a new product
-  // createProduct(product: Product): Observable<Product> {
-  //   return this.http.post<Product>(this.apiUrl+'/addProd', product, {
-  //     headers: new HttpHeaders({
-  //       'Content-Type': 'application/json'
-  //     })
-  //   });
-  // }
-
   createProduct(productFormData: FormData): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/addProd`, productFormData);
   }
 
-
   // Update an existing product by ID
-  updateProduct(id: number, product: Product): Observable<Product> {
-    const url = `${this.apiUrl}/${id}`;
-    return this.http.put<Product>(url, product, {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
-    });
+  updateProduct(prodId: number, formData: FormData): Observable<Product> {
+    return this.http.put<Product>(`${this.apiUrl}/updateProd/${prodId}`, formData);
   }
-
+  
   // Delete a product by ID
   deleteProduct(id: number): Observable<void> {
     const url = `${this.apiUrl+'/deleteProd'}/${id}`;

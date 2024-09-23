@@ -6,7 +6,7 @@ import { ProductInputComponent } from './product-input/product-input.component';
 
 const routes: Routes = [
   {
-    path : '',
+    path: '',
     redirectTo: 'home',
     pathMatch: 'full'
   },
@@ -16,11 +16,15 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    component : AdminLoginComponent
+    component: AdminLoginComponent
   },
   {
-    path : 'addProduct',
-    component : ProductInputComponent
+    path: 'addProduct',
+    component: ProductInputComponent
+  },
+  {
+    path: 'editProduct/:prodId',
+    component: ProductInputComponent
   }
 
 ];
