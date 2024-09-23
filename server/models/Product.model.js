@@ -17,12 +17,6 @@ export const getProductById = async (db, id) => {
     return results[0];
 };
 
-// export const updateProduct = async (db, id, product) => {
-//     const query = 'UPDATE Products SET Name = ?, Description = ?, Brand = ?, Rating = ?, Price = ?, Stock = ?, Discount = ?, Image = ? WHERE prodId = ?';
-//     const [results] = await db.execute(query, [product.Name, product.Description, product.Brand, product.Rating, product.Price, product.Stock, product.Discount, product.Image, id]);
-//     return results.affectedRows;
-// };
-
 export const updateProduct = async (db, id, product) => {
     // Build the query dynamically based on which fields are present in product
     const fields = Object.keys(product);
