@@ -38,4 +38,10 @@ export class ProductService {
     const url = `${this.apiUrl+'/deleteProd'}/${id}`;
     return this.http.delete<void>(url);
   }
+
+  // Search a product by Name
+  searchProducts(searchTerm: string): Observable<Product[]> {
+    const url = `${this.apiUrl+'/searchProducts'}/${searchTerm}`;
+    return this.http.get<Product[]>(url); // Assuming your API supports a query parameter for search
+  }
 }

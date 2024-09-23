@@ -3,16 +3,18 @@ import { RouterModule, Routes } from '@angular/router';
 import { ProductsComponent } from './products/products.component';
 import { AdminLoginComponent } from './admin-login/admin-login.component';
 import { ProductInputComponent } from './product-input/product-input.component';
+import { authGuard } from './guards/AuthGuard';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
   {
     path: 'home',
-    component: ProductsComponent
+    component: ProductsComponent,
+    // canActivate: [authGuard]
   },
   {
     path: 'login',
@@ -20,11 +22,14 @@ const routes: Routes = [
   },
   {
     path: 'addProduct',
-    component: ProductInputComponent
+    component: ProductInputComponent,
+    canActivate:[authGuard],
+
   },
   {
     path: 'editProduct/:prodId',
-    component: ProductInputComponent
+    component: ProductInputComponent,
+    canActivate:[authGuard],
   }
 
 ];

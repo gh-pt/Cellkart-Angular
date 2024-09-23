@@ -1,25 +1,27 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Product } from '../ProductClass/ProductClass';
 import { ProductService } from '../services/product.service';
+import { Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
-  styleUrl: './products.component.css'
+  styleUrls: ['./products.component.css']
 })
-
-export class ProductsComponent {
-  // products = [
-  //   new Product("iphone 16", "Latest iphone in 2024", "Apple", 5, 79900, 100, 10, "https://akm-img-a-in.tosshub.com/businesstoday/images/story/202409/66df413e6190a-iphone-16-and-iphone-16-plus-will-be-available-in-five-bold-colors-black--white--pink--teal--and-ul-094101473-16x9.jpg?size=948:533"),
-  //   new Product("iphone 15", "Latest iphone in 2023", "Apple", 5, 79900, 100, 10, "https://www.aptronixindia.com/media/catalog/product/cache/31f0162e6f7d821d2237f39577122a8a/i/p/iphone_15_pink_pdp_image_position-1__wwen-removebg-preview_1.png"),
-  //   new Product("pixel 9", "Latest pixel phone in 2024", "Google", 5, 79900, 100, 10, "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmUUWXnjJ2wcvJMNfaP3bSsZ67dSWico7Ksw&s"),
-  //   new Product("Moto Edge 50 pro", "Latest Moto Edge series phone in 2024", "Motorola", 4.8, 31990, 100, 10, "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUsRiqNJjz18_ObENTy_a7r6L-5OoMFKUOAg&s")
-  // ]
-
+export class ProductsComponent implements OnInit, OnDestroy {
   products: Product[] = [];
+  filteredProducts: Product[] = [];
+  searchTerm: string = '';
+  searchInput = new Subject<string>();
 
-  constructor(private productService:ProductService){
-
+  constructor(private productService: ProductService) {
+    // Debouncing the search input to reduce the number of API calls
+    this.searchInput
+      .pipe(debounceTime(300)) // Wait 300ms after the last keystroke before making the API call
+      .subscribe((searchTerm: string) => {
+        this.performSearch(searchTerm);
+      });
   }
 
   ngOnInit(): void {
@@ -28,27 +30,55 @@ export class ProductsComponent {
 
   loadProducts(): void {
     this.productService.getProducts().subscribe((data: Product[]) => {
-      console.log(data);
       this.products = data;
+      this.filteredProducts = [...this.products]; // Initially display all products
     });
   }
 
-  deleteProduct(id:number): void{
-    const ans=confirm("Do you really want to delete?")
-    if(ans){
-      const obs=this.productService.deleteProduct(id)
+  onSearchInputChange(event: Event) {
+    this.searchTerm = (event.target as HTMLInputElement).value; // Update search term
+    this.searchInput.next(this.searchTerm); // Emit new search term
+  }
+
+  clearSearch() {
+    this.searchTerm = ''; // Clear the search term
+    this.filteredProducts = [...this.products]; // Reset to show all products
+  }
+
+  performSearch(searchTerm: string): void {
+    if (!searchTerm.trim()) {
+      this.filteredProducts = [...this.products]; // Reset to all products if the search term is empty
+    } else {
+      // Call the API to perform the search
+      const obs = this.productService.searchProducts(searchTerm);
       obs.subscribe({
-        next:(obj)=>{
-          console.log(obj);
-          window.alert("Employe deleted successfully....");
-          this.products = this.products.filter(p => p.prodId !== id);
+        next: (product) => {
+          this.filteredProducts = product;
         },
-        error: (err)=>{
-          console.log(err); 
-          window.alert("something went wrong deleting employee...")
+        error: (err) => {
+          console.log(err)
         }
       });
     }
   }
 
+  deleteProduct(id: number): void {
+    const ans = confirm('Do you really want to delete?');
+    if (ans) {
+      this.productService.deleteProduct(id).subscribe({
+        next: () => {
+          alert('Product deleted successfully.');
+          this.filteredProducts = this.filteredProducts.filter(p => p.prodId !== id);
+        },
+        error: (err) => {
+          console.log(err);
+          alert('Something went wrong while deleting the product.');
+        }
+      });
+    }
+  }
+
+  ngOnDestroy() {
+    this.searchInput.complete();
+  }
 }

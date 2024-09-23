@@ -7,5 +7,5 @@ import { Product } from './ProductClass/ProductClass';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'Cellkart-Angular';
+  
 }

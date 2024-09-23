@@ -1,8 +1,21 @@
-<div class="container mx-auto mt-8">
+<div class="container mx-auto mt-8"> <!-- Add relative position to the container -->
+    <input 
+        type="text" 
+        placeholder="Search..."
+        (input)="onSearchInputChange($event)"
+        [(ngModel)]="searchTerm" 
+        class="w-[50%] rounded-md outline-none border border-black py-1 px-2 text-black mb-4 relative" />
+    <!-- Clear button -->
+    <button *ngIf="searchTerm" 
+        (click)="clearSearch()"
+        class="absolute text-black left-[48%] hover:text-gray-900 text-2xl">
+        &times; <!-- Cross icon -->
+    </button>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-        <div *ngFor="let product of products">
+        <div *ngFor="let product of filteredProducts || []">
             <!-- Pass product data to the ProductCard component -->
             <app-product-card [product]="product" (emitter)="deleteProduct($event)"></app-product-card>
         </div>
     </div>
 </div>
+

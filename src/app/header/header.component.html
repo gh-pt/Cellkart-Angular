@@ -1,5 +1,7 @@
 <header class="w-full h-[55px] py-2 text-xl flex justify-around items-center text-yellow-400">
-    <div class="logo"><a routerLink="home">cellKart</a></div>
+    <div class="logo">
+        <a routerLink="home">cellKart</a>
+    </div>
     <div class="nav">
         <ul class="flex items-center justify-center gap-3">
             <li class="nav-li"><a routerLink="home">Home</a></li>
@@ -9,8 +11,13 @@
         </ul>
     </div>
     <div class="end">
-        <button class="border border-black bg-yellow-400 text-black rounded-md px-3">
+        <!-- Show Login button when isLogin is false or not set -->
+        <button *ngIf="!isLogin" class="border border-black bg-yellow-400 text-black rounded-md px-3">
             <a routerLink="login">Login</a>
+        </button>
+        <!-- Show Logout button when isLogin is true -->
+        <button *ngIf="isLogin === true" (click)="logout()" class="border border-black bg-yellow-400 text-black rounded-md px-3">
+            Logout
         </button>
     </div>
 </header>

@@ -10,7 +10,12 @@ import { ProductCardComponent } from './product-card/product-card.component';
 import { ProductsComponent } from './products/products.component';
 import { ProductInputComponent } from './product-input/product-input.component';
 import { AdminLoginComponent } from './admin-login/admin-login.component';
-import { HttpClientModule, provideHttpClient } from '@angular/common/http';
+import { provideHttpClient } from '@angular/common/http';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+
 
 
 @NgModule({
@@ -28,8 +33,11 @@ import { HttpClientModule, provideHttpClient } from '@angular/common/http';
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    BrowserAnimationsModule, // Required for Angular Material animations
+    MatCardModule, // Import MatCardModule
+    MatButtonModule // Import MatButtonModule
   ],
-  providers: [provideHttpClient()],
+  providers: [provideHttpClient(), provideAnimationsAsync()],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
