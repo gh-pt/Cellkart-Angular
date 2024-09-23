@@ -1,0 +1,9 @@
+<div class="container mx-auto">
+    <div>Current Count: {{ count$ | async }}</div>
+    <button (click)="increment()"
+        class="border border-black bg-blue-400 text-black px-2 rounded-md mx-2">Increment</button>
+    <button (click)="decrement()"
+        class="border border-black bg-red-400 text-black px-2 rounded-md mx-2">Decrement</button>
+    <button (click)="reset()" class="border border-black bg-yellow-400 text-black px-2 rounded-md mx-2">Reset
+        Counter</button>
+</div>

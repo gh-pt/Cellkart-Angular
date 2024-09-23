@@ -15,6 +15,9 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import { StoreModule } from '@ngrx/store';
+import { counterReducer } from './ngRx/counter.reducer';
+import { MyCounterComponent } from './my-counter/my-counter.component';
 
 
 
@@ -27,6 +30,7 @@ import { MatButtonModule } from '@angular/material/button';
     ProductsComponent,
     ProductInputComponent,
     AdminLoginComponent,
+    MyCounterComponent,
   ],
   imports: [
     BrowserModule,
@@ -35,7 +39,8 @@ import { MatButtonModule } from '@angular/material/button';
     ReactiveFormsModule,
     BrowserAnimationsModule, // Required for Angular Material animations
     MatCardModule, // Import MatCardModule
-    MatButtonModule // Import MatButtonModule
+    MatButtonModule, 
+    StoreModule.forRoot({ count: counterReducer })
   ],
   providers: [provideHttpClient(), provideAnimationsAsync()],
   bootstrap: [AppComponent]
