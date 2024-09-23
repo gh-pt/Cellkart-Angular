@@ -71,12 +71,10 @@ export const getBrandProducts = async (db,brand) => {
 export const getSearchProducts = async (db, q) => {
     // Using a wildcard for partial matches
     const query = 'SELECT * FROM Products WHERE LOWER(Name) LIKE LOWER(?)';
-    const searchTerm = `%${q}%`; // Wrap the search term with wildcards
+    const searchTerm = `%${q}%`;
     
     // Execute the query with the search term
     const results = await db.execute(query, [searchTerm]);
-    
-    // Return the results, which should include variations like "iphone 15", "iphone 16", "iphone 15plus", etc.
     return results;
 };
 
